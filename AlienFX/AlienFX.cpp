@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <iostream>
 #include <conio.h>
+#include <vector>
 #include "includes\LFX2.h"
 #include "includes\LFXDecl.h"
 #include "LoadDLL.h"
@@ -14,16 +15,8 @@ int main()
 	AlienFX afx;
 	if (afx.init() == LFX_SUCCESS)
 	{
-		//char version[50];
-		//afx.getVersion(version, 50);
-		//std::cout << "Version : " << version << std::endl;
-
-		afx.reset();
-		std::cout << "Reset" << std::endl;
-
-		unsigned int numDevs = 0;
-		std::cout << "Error : " << afx.getNumDevices(&numDevs) << std::endl;
-		std::cout << "Devices : " << numDevs << std::endl;
+		unsigned int devices_count = 0;
+		std::vector<unsigned int> lights_count;
 
 		LFX_COLOR color;
 		color.red = 0;
@@ -31,35 +24,34 @@ int main()
 		color.blue = 0;
 		color.brightness = 255;
 
-		//if (afx.light(LFX_ALL, LFX_RED | LFX_FULL_BRIGHTNESS) == LFX_SUCCESS)
-			//std::cout << "Light" << std::endl;
+		afx.reset();
+		std::cout << "Reset" << std::endl;
+		
+		afx.getNumDevices(&devices_count);
+		std::cout << "Devices : " << devices_count << std::endl;
 
-		while (color.brightness > 0)
+		for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
 		{
-			for (unsigned int devIndex = 0; devIndex < numDevs; devIndex++)
-			{
-				unsigned int numLights = 0;
-				afx.getNumLights(devIndex, &numLights);
+			unsigned int count = 0;
+			afx.getNumLights(devices_index, &count);
+			lights_count.push_back(count);
+			std::cout << "Device " << devices_index << " : " << count << " Lights " << std::endl;
+		}
 
-				for (unsigned int lightIndex = 0; lightIndex < numLights; lightIndex++)
+		for (color.brightness = 255; color.brightness > 0; color.brightness--)
+		{
+			for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
+			{
+				for (unsigned int light_index = 0; light_index < lights_count[devices_index]; light_index++)
 				{
-					//std::cout << "Device : " << devIndex << " - Light " << lightIndex << std::endl;
-					LFX_RESULT result = afx.setLightColor(devIndex, lightIndex, &color);
-					//if (result == LFX_SUCCESS)
-						//std::cout << "Light" << std::endl;
-					//else
-						//std::cout << "Light Error : " << result << std::endl;
+					LFX_RESULT result = afx.setLightColor(devices_index, light_index, &color);
+					//std::cout << "Device : " << devices_index << " - Light : " << light_index << std::endl;
 				}
 			}
 
-			afx.update() == LFX_SUCCESS
-			//if (afx.update() == LFX_SUCCESS)
-				//std::cout << "Update" << std::endl;
-			
-			color.brightness--;
+			afx.update();
+			std::cout << (unsigned int)color.brightness << std::endl;
 		}
-
-		
 
 		while (1)
 			if (_kbhit())
