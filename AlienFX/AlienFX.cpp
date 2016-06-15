@@ -33,13 +33,33 @@ int main()
 
 		//if (afx.light(LFX_ALL, LFX_RED | LFX_FULL_BRIGHTNESS) == LFX_SUCCESS)
 			//std::cout << "Light" << std::endl;
-		LFX_RESULT result = afx.setLightColor(0, LFX_ALL, &color);
-		if (result == LFX_SUCCESS)
-			std::cout << "Light" << std::endl;
-		else
-			std::cout << "Light Error : " << result << std::endl;
-		if (afx.update() == LFX_SUCCESS)
-			std::cout << "Update" << std::endl;
+
+		while (color.brightness > 0)
+		{
+			for (unsigned int devIndex = 0; devIndex < numDevs; devIndex++)
+			{
+				unsigned int numLights = 0;
+				afx.getNumLights(devIndex, &numLights);
+
+				for (unsigned int lightIndex = 0; lightIndex < numLights; lightIndex++)
+				{
+					//std::cout << "Device : " << devIndex << " - Light " << lightIndex << std::endl;
+					LFX_RESULT result = afx.setLightColor(devIndex, lightIndex, &color);
+					//if (result == LFX_SUCCESS)
+						//std::cout << "Light" << std::endl;
+					//else
+						//std::cout << "Light Error : " << result << std::endl;
+				}
+			}
+
+			afx.update() == LFX_SUCCESS
+			//if (afx.update() == LFX_SUCCESS)
+				//std::cout << "Update" << std::endl;
+			
+			color.brightness--;
+		}
+
+		
 
 		while (1)
 			if (_kbhit())
