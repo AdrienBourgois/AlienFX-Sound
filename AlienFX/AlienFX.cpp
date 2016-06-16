@@ -38,24 +38,45 @@ int main()
 			std::cout << "Device " << devices_index << " : " << count << " Lights " << std::endl;
 		}
 
-		for (color.brightness = 255; color.brightness > 0; color.brightness--)
+		bool skip = false;
+
+		while (!skip)
 		{
-			for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
+			for (color.brightness = 255; color.brightness > 0; color.brightness--)
 			{
-				for (unsigned int light_index = 0; light_index < lights_count[devices_index]; light_index++)
+				for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
 				{
-					LFX_RESULT result = afx.setLightColor(devices_index, light_index, &color);
-					//std::cout << "Device : " << devices_index << " - Light : " << light_index << std::endl;
+					for (unsigned int light_index = 0; light_index < lights_count[devices_index]; light_index++)
+					{
+						LFX_RESULT result = afx.setLightColor(devices_index, light_index, &color);
+						//std::cout << "Device : " << devices_index << " - Light : " << light_index << std::endl;
+					}
 				}
+
+				afx.update();
+				std::cout << (unsigned int)color.brightness << std::endl;
+				Sleep(2);
 			}
 
-			afx.update();
-			std::cout << (unsigned int)color.brightness << std::endl;
+			bool key_pressed = false;
+			while (!key_pressed)
+			{
+				if (_kbhit())
+				{
+					char key = _getch();
+					if (key == 'r')
+						key_pressed = true;
+					else if (key == 'q')
+					{
+						key_pressed = true;
+						skip = true;
+					}
+
+				}
+			}
 		}
 
-		while (1)
-			if (_kbhit())
-				break;
+		afx.release();
 	}
 	else
 		std::cout << "Can't initialize AFX" << std::endl;
