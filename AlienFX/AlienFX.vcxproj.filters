@@ -15,22 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="includes\LFX2.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\LFXConfigurator.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="includes\LFXDecl.h">
@@ -50,9 +38,5 @@
     <ClCompile Include="LoadDLL.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DLL\LightFXConfigurator64.dll" />
-    <None Include="DLL\LightFX.dll" />
   </ItemGroup>
 </Project>
