@@ -24,7 +24,7 @@
     <ClInclude Include="includes\LFXDecl.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="LoadDLL.h">
+    <ClInclude Include="AlienFX.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="AlienFX.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="LoadDLL.cpp">
+    <ClCompile Include="AlienFX.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,86 +1,43 @@
 #include "stdafx.h"
-#include <windows.h>
-#include <iostream>
-#include <conio.h>
-#include <vector>
-#include "includes\LFX2.h"
-#include "includes\LFXDecl.h"
-#include "LoadDLL.h"
+#include "AlienFX.h"
 
-
-int main()
+AlienFX::AlienFX()
 {
-	std::cout << "Test" << std::endl;
+	std::cout << "DLL Initialisation..." << std::endl;
 
-	AlienFX afx;
-	if (afx.init() == LFX_SUCCESS)
+	hLibrary = LoadLibrary(_T(LFX_DLL_NAME));
+
+	if (hLibrary)
 	{
-		unsigned int devices_count = 0;
-		std::vector<unsigned int> lights_count;
+		init = (LFX2INITIALIZE)GetProcAddress(hLibrary, LFX_DLL_INITIALIZE);
+		release = (LFX2RELEASE)GetProcAddress(hLibrary, LFX_DLL_RELEASE);
+		reset = (LFX2RESET)GetProcAddress(hLibrary, LFX_DLL_RESET);
+		update = (LFX2UPDATE)GetProcAddress(hLibrary, LFX_DLL_UPDATE);
+		updateDefault = (LFX2UPDATEDEFAULT)GetProcAddress(hLibrary, LFX_DLL_UPDATEDEFAULT);
+		getNumDevices = (LFX2GETNUMDEVICES)GetProcAddress(hLibrary, LFX_DLL_GETNUMDEVICES);
+		getDeviceDescription = (LFX2GETDEVDESC)GetProcAddress(hLibrary, LFX_DLL_GETDEVDESC);
+		getNumLights = (LFX2GETNUMLIGHTS)GetProcAddress(hLibrary, LFX_DLL_GETNUMLIGHTS);
+		setLightColor = (LFX2SETLIGHTCOL)GetProcAddress(hLibrary, LFX_DLL_SETLIGHTCOL);
+		getLightColor = (LFX2GETLIGHTCOL)GetProcAddress(hLibrary, LFX_DLL_GETLIGHTCOL);
+		getLightDescription = (LFX2GETLIGHTDESC)GetProcAddress(hLibrary, LFX_DLL_GETLIGHTDESC);
+		getLightLocation = (LFX2GETLIGHTLOC)GetProcAddress(hLibrary, LFX_DLL_GETLIGHTLOC);
+		light = (LFX2LIGHT)GetProcAddress(hLibrary, LFX_DLL_LIGHT);
+		setLightActionColor = (LFX2SETLIGHTACTIONCOLOR)GetProcAddress(hLibrary, LFX_DLL_SETLIGHTACTIONCOLOR);
+		setLightActionColorEx = (LFX2SETLIGHTACTIONCOLOREX)GetProcAddress(hLibrary, LFX_DLL_SETLIGHTACTIONCOLOREX);
+		actionColor = (LFX2ACTIONCOLOR)GetProcAddress(hLibrary, LFX_DLL_ACTIONCOLOR);
+		actionColorEx = (LFX2ACTIONCOLOREX)GetProcAddress(hLibrary, LFX_DLL_ACTIONCOLOREX);
+		setTiming = (LFX2SETTIMING)GetProcAddress(hLibrary, LFX_DLL_SETTIMING);
+		getVersion = (LFX2GETVERSION)GetProcAddress(hLibrary, LFX_DLL_GETVERSION);
 
-		LFX_COLOR color;
-		color.red = 0;
-		color.green = 255;
-		color.blue = 0;
-		color.brightness = 255;
-
-		afx.reset();
-		std::cout << "Reset" << std::endl;
-		
-		afx.getNumDevices(&devices_count);
-		std::cout << "Devices : " << devices_count << std::endl;
-
-		for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
-		{
-			unsigned int count = 0;
-			afx.getNumLights(devices_index, &count);
-			lights_count.push_back(count);
-			std::cout << "Device " << devices_index << " : " << count << " Lights " << std::endl;
-		}
-
-		bool skip = false;
-
-		while (!skip)
-		{
-			for (color.brightness = 255; color.brightness > 0; color.brightness--)
-			{
-				for (unsigned int devices_index = 0; devices_index < devices_count; devices_index++)
-				{
-					for (unsigned int light_index = 0; light_index < lights_count[devices_index]; light_index++)
-					{
-						LFX_RESULT result = afx.setLightColor(devices_index, light_index, &color);
-						//std::cout << "Device : " << devices_index << " - Light : " << light_index << std::endl;
-					}
-				}
-
-				afx.update();
-				std::cout << (unsigned int)color.brightness << std::endl;
-				Sleep(2);
-			}
-
-			bool key_pressed = false;
-			while (!key_pressed)
-			{
-				if (_kbhit())
-				{
-					char key = _getch();
-					if (key == 'r')
-						key_pressed = true;
-					else if (key == 'q')
-					{
-						key_pressed = true;
-						skip = true;
-					}
-
-				}
-			}
-		}
-
-		afx.release();
+		std::cout << "DLL Initialized !" << std::endl;
 	}
 	else
-		std::cout << "Can't initialize AFX" << std::endl;
-
-    return 0;
+		std::cout << "Problem in initialisation of DLL !" << std::endl;
 }
 
+AlienFX::~AlienFX()
+{
+	release();
+	FreeLibrary(hLibrary);
+	std::cout << "DLL Free !" << std::endl;
+}
