@@ -13,7 +13,7 @@ int main()
 	std::cout << "Test" << std::endl;
 
 	AlienFX afx;
-	if (afx.init() == LFX_SUCCESS)
+	if (afx.init())
 	{
 		unsigned int devices_count = 0;
 		std::vector<unsigned int> lights_count;
