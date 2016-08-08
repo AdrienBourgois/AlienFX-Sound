@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AlienFX.h"
+#include "AlienFX_Lib.h"
 
 AlienFX::AlienFX()
 {
