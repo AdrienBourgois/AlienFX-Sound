@@ -10,6 +10,7 @@ MFX::MFX()
 MFX::~MFX()
 {
 	delete afx;
+	afx = nullptr;
 }
 
 void MFX::makeLightList()
@@ -60,4 +61,70 @@ void MFX::displayLightList()
 			std::cout << "\t-> Light " << light->id << " : " << light->description << std::endl;
 		}
 	}
+}
+
+void MFX::globalLight(Color color)
+{
+	for (unsigned int i = 0; i < devices.size(); ++i)
+	{
+		Device* device = devices[i];
+
+		for (unsigned int j = 0; j < device->lights.size(); ++j)
+		{
+			Light* light = device->lights[j];
+			afx->setLightColor(device->id, light->id, color.get());
+		}
+	}
+
+	afx->update();
+}
+
+void MFX::globalLight(unsigned char _red, unsigned char _blue, unsigned char _green, unsigned char _brightness)
+{
+	PLFX_COLOR color = new _LFX_COLOR;
+	color->red = _red;
+	color->green = _green;
+	color->blue = _blue;
+	color->brightness = _brightness;
+
+	for (unsigned int i = 0; i < devices.size(); ++i)
+	{
+		Device* device = devices[i];
+
+		for (unsigned int j = 0; j < device->lights.size(); ++j)
+		{
+			Light* light = device->lights[j];
+			afx->setLightColor(device->id, light->id, color);
+		}
+	}
+
+	afx->update();
+
+	delete color;
+}
+
+Color::Color(unsigned char _red, unsigned char _blue, unsigned char _green, unsigned char _brightness)
+{
+	red = _red;
+	blue = _blue;
+	green = _green;
+	brightness = _brightness;
+}
+
+PLFX_COLOR Color::get()
+{
+	lfx.red = red;
+	lfx.green = green;
+	lfx.blue = blue;
+	lfx.brightness = brightness;
+
+	return &lfx;
+}
+
+void Color::set(unsigned char _red, unsigned char _blue, unsigned char _green, unsigned char _brightness)
+{
+	red = _red;
+	blue = _blue;
+	green = _green;
+	brightness = _brightness;
 }

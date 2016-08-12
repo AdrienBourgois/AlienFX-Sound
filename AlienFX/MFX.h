@@ -6,6 +6,7 @@
 
 class Device;
 class Light;
+class Color;
 
 class MFX
 {
@@ -15,6 +16,8 @@ public:
 
 	void makeLightList();
 	void displayLightList();
+	void globalLight(Color color);
+	void globalLight(unsigned char, unsigned char, unsigned char, unsigned char);
 	AlienFX* getAlienFX() { return afx; }
 
 	std::vector<Device*> devices;
@@ -44,4 +47,20 @@ public:
 
 	int id;
 	std::string description;
+};
+
+class Color
+{
+public:
+	Color(unsigned char, unsigned char, unsigned char, unsigned char);
+	~Color() = default;
+
+	PLFX_COLOR get();
+	void set(unsigned char, unsigned char, unsigned char, unsigned char);
+
+	unsigned char red;
+	unsigned char blue;
+	unsigned char green;
+	unsigned char brightness;
+	_LFX_COLOR lfx;
 };

@@ -37,9 +37,13 @@ AlienFX::AlienFX()
 
 AlienFX::~AlienFX()
 {
-	release();
-	FreeLibrary(hLibrary);
-	std::cout << "DLL Free !" << std::endl;
+	if(!release())
+		std::cout << "Problem when realease DLL !" << std::endl;
+	else
+	{
+		FreeLibrary(hLibrary);
+		std::cout << "DLL Free !" << std::endl;
+	}
 }
 
 bool AlienFX::init()
