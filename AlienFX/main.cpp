@@ -13,7 +13,8 @@ int main()
 {
 	MFX mfx;
 	AlienFX* afx = mfx.getAlienFX();
-	afx->init();
+	if (!afx->init())
+		return EXIT_FAILURE;
 	afx->reset();
 
 	mfx.makeLightList();
@@ -57,8 +58,6 @@ int main()
 			key = 0;
 		}
 	}
-
-	Sleep(300);
 
 	return EXIT_SUCCESS;
 }
