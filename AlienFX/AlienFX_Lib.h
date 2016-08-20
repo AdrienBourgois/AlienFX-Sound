@@ -1,8 +1,6 @@
 #pragma once
 
 #include "stdafx.h"
-#include <windows.h>
-#include <iostream>
 #include "includes\LFX2.h"
 #include "includes\LFXDecl.h"
 

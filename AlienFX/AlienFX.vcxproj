@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AlienFX_Lib.h" />
+    <ClInclude Include="Chrono.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="MFX.h" />
     <ClInclude Include="includes\LFX2.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Chrono.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AlienFX_Lib.cpp" />
     <ClCompile Include="MFX.cpp" />

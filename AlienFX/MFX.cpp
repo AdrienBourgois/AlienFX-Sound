@@ -5,10 +5,19 @@
 MFX::MFX()
 {
 	afx = new AlienFX;
+	if(afx->init())
+		afx->reset();
+	else
+	{
+		delete afx;
+		afx = nullptr;
+		std::cout << "Can't initiliaze AlienFx class" << std::endl;
+	}
 }
 
 MFX::~MFX()
 {
+	afx->reset();
 	delete afx;
 	afx = nullptr;
 }

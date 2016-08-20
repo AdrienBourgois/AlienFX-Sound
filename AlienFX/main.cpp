@@ -1,21 +1,16 @@
 #include "stdafx.h"
-#include <windows.h>
-#include <iostream>
-#include <conio.h>
-#include <vector>
 #include "includes\LFX2.h"
 #include "includes\LFXDecl.h"
 #include "AlienFX_Lib.h"
 #include "MFX.h"
-
+#include "Chrono.h"
 
 int main()
 {
 	MFX mfx;
 	AlienFX* afx = mfx.getAlienFX();
-	if (!afx->init())
+	if (afx == nullptr)
 		return EXIT_FAILURE;
-	afx->reset();
 
 	mfx.makeLightList();
 	mfx.displayLightList();
@@ -23,10 +18,10 @@ int main()
 	Color color(255, 0, 0, 255);
 	mfx.globalLight(color);
 
-	bool key_pressed = false;
+	bool quit = false;
 	char key;
 
-	while (!key_pressed)
+	while (!quit)
 	{	
 		/*std::cout << "B : " << static_cast<unsigned int>(color.brightness) << std::endl;
 		--color.brightness;
@@ -40,7 +35,7 @@ int main()
 		{
 			key = _getch();
 			if (key == 'q')
-				key_pressed = true;
+				quit = true;
 
 			else if (key == '+' && color.brightness < 255)
 			{
