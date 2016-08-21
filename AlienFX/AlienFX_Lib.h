@@ -1,8 +1,6 @@
 #pragma once
 
 #include "stdafx.h"
-#include "includes\LFX2.h"
-#include "includes\LFXDecl.h"
 
 class AlienFX
 {

@@ -148,8 +148,8 @@
     <ClInclude Include="Chrono.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="MFX.h" />
-    <ClInclude Include="includes\LFX2.h" />
-    <ClInclude Include="includes\LFXDecl.h" />
+    <ClInclude Include="LFX2.h" />
+    <ClInclude Include="LFXDecl.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

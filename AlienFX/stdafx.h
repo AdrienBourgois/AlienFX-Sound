@@ -15,6 +15,9 @@
 #include <chrono>
 #include <vector>
 
+#include "LFX2.h"
+#include "LFXDecl.h"
+
 
 
 // TODO: faites référence ici aux en-têtes supplémentaires nécessaires au programme

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AlienFX_Lib.h"
+#include "LFXDecl.h"
 
 enum color : int
 {

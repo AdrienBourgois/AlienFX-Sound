@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "includes\LFX2.h"
-#include "includes\LFXDecl.h"
-#include "AlienFX_Lib.h"
 #include "MFX.h"
 #include "Chrono.h"
 
