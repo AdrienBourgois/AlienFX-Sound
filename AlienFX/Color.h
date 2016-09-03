@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LFXDecl.h"
+#include <iostream>
 
 enum color : int
 {
@@ -21,6 +22,8 @@ public:
 
 	void on() { brightness = 255; }
 	void off() { brightness = 0; }
+
+	friend std::ostream& operator<< (std::ostream &out, const Color &color);
 
 	unsigned char red;
 	unsigned char blue;

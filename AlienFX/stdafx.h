@@ -14,6 +14,8 @@
 #include <conio.h>
 #include <chrono>
 #include <vector>
+#include <tuple>
+#include <string>
 
 #include "LFX2.h"
 #include "LFXDecl.h"
